@@ -1,20 +1,33 @@
 // src/components/Home.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../services/api'; // Import the logout function
+import TaskForm from './TaskForm'; // Component to add tasks
+import TaskList from './TaskList'; // Component to list tasks
 
 function Home() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook to navigate between routes
 
-    const handleLogout = () => {
-        // Clear authentication state if implemented
-        navigate('/'); // Redirect to login page
+    // Function to handle logout
+    const handleLogout = async () => {
+        try {
+            await logoutUser(); // Call the logout function
+            navigate('/'); // Redirect to login page
+        } catch (error) {
+            console.error('Logout Error:', error);
+            // Even if logout fails, navigate to login page
+            navigate('/');
+        }
     };
 
     return (
         <div>
             <h2>Welcome to the TODO List App</h2>
-            <p>You have successfully logged in or registered.</p>
             <button onClick={handleLogout}>Logout</button>
+            <hr />
+            {/* Include the task form and task list components */}
+            <TaskForm />
+            <TaskList />
         </div>
     );
 }
