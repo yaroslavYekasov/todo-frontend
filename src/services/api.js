@@ -29,22 +29,14 @@ export const logoutUser = () => {
     return axiosInstance.post('/Auth/logout');
 };
 
-// Function to get tasks for the logged-in user
 export const getTasks = () => {
     return axiosInstance.get('/Tasks');
 };
 
-// Function to add a new task
 export const addTask = (taskData) => {
-    return axiosInstance.post('/Tasks', {
-        Date: taskData.date,
-        Subject: taskData.subject,
-        Title: taskData.title,
-        Description: taskData.description,
-    });
+    return axiosInstance.post('/Tasks', taskData);
 };
 
-// Function to delete a task
 export const deleteTask = (id) => {
     return axiosInstance.delete(`/Tasks/${id}`);
 };

@@ -1,33 +1,19 @@
-// src/components/Home.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../services/api'; // Import the logout function
-import TaskForm from './TaskForm'; // Component to add tasks
-import TaskList from './TaskList'; // Component to list tasks
+import TaskForm from './TaskForm';
+import TaskList from './TaskList';
 
 function Home() {
-    const navigate = useNavigate(); // Hook to navigate between routes
+    const [taskListKey, setTaskListKey] = React.useState(0);
 
-    // Function to handle logout
-    const handleLogout = async () => {
-        try {
-            await logoutUser(); // Call the logout function
-            navigate('/'); // Redirect to login page
-        } catch (error) {
-            console.error('Logout Error:', error);
-            // Even if logout fails, navigate to login page
-            navigate('/');
-        }
+    const refreshTaskList = () => {
+        setTaskListKey(prevKey => prevKey + 1);
     };
 
     return (
         <div>
-            <h2>Welcome to the TODO List App</h2>
-            <button onClick={handleLogout}>Logout</button>
-            <hr />
-            {/* Include the task form and task list components */}
-            <TaskForm />
-            <TaskList />
+            <h2>Welcome to Your Task Manager</h2>
+            <TaskForm onTaskAdded={refreshTaskList} />
+            <TaskList key={taskListKey} />
         </div>
     );
 }
