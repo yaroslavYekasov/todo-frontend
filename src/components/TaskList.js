@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getTasks, deleteTask } from '../services/api';
+import { getTasks, deleteTask, updateTask } from '../services/api'; // Assuming you have an updateTask function
 import { format, parseISO } from 'date-fns';
+import EditTaskForm from './EditTaskForm'; // Add this component
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
     const [message, setMessage] = useState('');
+    const [isEditing, setIsEditing] = useState(false); // Track if editing is enabled
+    const [currentTask, setCurrentTask] = useState(null); // Store the task to edit
 
     const fetchTasks = async () => {
         try {
@@ -31,6 +34,11 @@ function TaskList() {
         }
     };
 
+    const handleEditClick = (task) => {
+        setIsEditing(true);
+        setCurrentTask(task);
+    };
+
     return (
         <div>
             <h3>Your Tasks</h3>
@@ -45,6 +53,7 @@ function TaskList() {
                             <li key={task.id}>
                                 <strong>{task.title}</strong> - {formattedDate} - {task.subject}
                                 <p>{task.description}</p>
+                                <button onClick={() => handleEditClick(task)}>Edit</button>
                                 <button onClick={() => handleDelete(task.id)}>Delete</button>
                             </li>
                         );
@@ -52,6 +61,10 @@ function TaskList() {
                 </ul>
             ) : (
                 <p>No tasks available.</p>
+            )}
+
+            {isEditing && currentTask && (
+                <EditTaskForm task={currentTask} setIsEditing={setIsEditing} fetchTasks={fetchTasks} />
             )}
         </div>
     );

@@ -40,3 +40,8 @@ export const addTask = (taskData) => {
 export const deleteTask = (id) => {
     return axiosInstance.delete(`/Tasks/${id}`);
 };
+
+export const updateTask = (taskId, taskData) => {
+    return axiosInstance.put(`/Tasks/${taskId}`, taskData);
+};
+
