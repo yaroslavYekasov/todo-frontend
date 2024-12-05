@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
-import UserInfoPage from './components/UserInfoPage'; // Import the new UserInfoPage
+import UserInfoPage from './components/UserInfoPage';
+import Users from './components/Users';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/register" element={<Register />} />     {/* Registration page */}
                     <Route path="/home" element={<Home />} />             {/* Home page after login */}
                     <Route path="/user-info" element={<UserInfoPage />} /> {/* Edit User Info page */}
+                    <Route path="/users" element={<Users />} />  {/* Add route for Users page */}
                 </Routes>
             </div>
         </Router>
